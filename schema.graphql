@@ -1,0 +1,14 @@
+type Query {
+    tasks: [Task]
+    # task(id: String): Task
+}
+
+type Task {
+    title: String!
+    description: String
+    status: Status
+}
+
+enum Status {
+    PENDING, IN_PROGRESS, BLOCKED, COMPLETED
+}
