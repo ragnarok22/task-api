@@ -1,12 +1,23 @@
 type Query {
     tasks: [Task]
-    # task(id: String): Task
+    task(id: String): Task
+}
+
+type Mutation {
+    addTask(title: String!, status: String, description: String): Task
+    removeTask(id: String!): Response
 }
 
 type Task {
+    id: String
     title: String!
     description: String
     status: Status
+}
+
+type Response {
+    code: String
+    message: String
 }
 
 enum Status {
