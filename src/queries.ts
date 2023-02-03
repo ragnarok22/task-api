@@ -1,8 +1,26 @@
-import { getFirestore, collection, getDocs, addDoc, query, getDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, orderBy, limit, query, getDoc, doc, where } from "firebase/firestore";
 import { GraphQLError } from "graphql";
 
-const getTasks = async () => {
-    const tasksQuery = query(collection(getFirestore(), 'tasks'))
+const getTasks = async (_, { filters }) => {
+
+
+    const tasksRef = collection(getFirestore(), 'tasks')
+    let tasksQuery = query(tasksRef, orderBy('title'))
+
+    if (filters) {
+        const { title, description, status } = filters
+        if (title) {
+            tasksQuery = query(tasksQuery, where('title', '>=', title))
+            tasksQuery = query(tasksQuery, where('title', '<=', title + 'z'))
+        }
+        if (description) {
+            tasksQuery = query(tasksQuery, where('description', '==', description))
+        }
+        if (status) {
+            tasksQuery = query(tasksQuery, where('status', '==', status))
+        }
+    }
+
     return await getDocs(tasksQuery).then(value => {
         return value.docs.map(doc => {
             return { id: doc.id, ...doc.data()}
