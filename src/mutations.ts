@@ -1,4 +1,4 @@
-import { getFirestore, collection, doc, addDoc, query, deleteDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, addDoc, query, deleteDoc, updateDoc } from "firebase/firestore";
 
 export const addTask = async (_, data) => {
     try {
@@ -20,8 +20,9 @@ export const addTask = async (_, data) => {
 
 }
 
-export const updateTask = async (_, { id }) => {
-    
+export const updateTask = async (_, data) => {
+    await updateDoc(doc(getFirestore(), 'tasks', data.task.id), data)
+    return {code: 200, message: "updated"}
 }
 
 export const removeTask = async (_, { id }) => {

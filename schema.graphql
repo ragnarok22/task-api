@@ -5,7 +5,15 @@ type Query {
 
 type Mutation {
     addTask(title: String!, status: String, description: String): Task
+    updateTask(task: UpdateTask): Response
     removeTask(id: String!): Response
+}
+
+input UpdateTask {
+    id: String!
+    title: String
+    description: String
+    status: Status
 }
 
 type Task {

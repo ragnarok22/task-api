@@ -35,6 +35,7 @@ export const resolvers = {
     Mutation: {
         addTask: mutations.addTask,
         removeTask: mutations.removeTask,
+        updateTask: mutations.updateTask,
     }
 }
 
